@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>JSF Hibernate CRUD Example</title>
+    <h:dataTable value="#{bookBean.allBooks}" var="BookBean"
+    />
+    <style type="">
+        tfoot{
+            text-align: center;
+        }
+        thead{
+            background-color: magenta;
+            color: white;
+        }
+        td{
+            font-weight: bold;
+        }
+        .msg{
+            font-size: small;
+            color: blue;
+        }
+    </style>
+</h:head>
+
+
+<h:body>
+    <h:form>
+        <h:panelGrid id="panel1" columns="2" border="1"
+                     cellpadding="6" cellspacing="1">
+            <f:facet name="header">
+                <h:outputText value="Add Book Information"/>
+            </f:facet>
+            <h:outputLabel value="Book Name:"/>
+            <h:inputText value="#{BookBean.book_name}" id="bbn"/>
+            <h:outputLabel value="Author:"/>
+            <h:inputText value="#{BookBean.author}" id="ba"/>
+            <h:outputLabel value="Genre:"/>
+            <h:inputText value="#{BookBean.genre}" id="bg"/>
+            <h:outputLabel value="Page:"/>
+            <h:inputText value="#{BookBean.page}" id="bpa"/>
+            <h:outputLabel value="Price:"/>
+            <h:inputText value="#{BookBean.price}" id="bpr"/>
+            <f:facet name="footer">
+                <h:outputLabel value="#{BookBean.msg}" id="msg" styleClass="msg"/>
+                <h:commandButton value="Save" action="#{BookBean.saveBook}">
+                    <f:ajax render="bbn ba bg bpa bpr msg" execute="@form"/>
+                </h:commandButton>
+            </f:facet>
+        </h:panelGrid>
+
+    </h:form>
+
+    <h:form>
+        <h:panelGrid id="panel2" columns="2" border="1"
+                     cellpadding="5" cellspacing="1">
+            <f:facet name="header">
+                <h:outputText value="Read/Update/Delete Book Info"/>
+            </f:facet>
+            <h:outputLabel value="Select book:"/>
+            <h:selectOneMenu value="#{BookBean.selectedname}" id="ulist">
+                <f:selectItems value="#{BookBean.allBooks}"/>
+                <f:ajax event="change" render="cid bname fname lname email sd" listener="#{BookBean.fullInfo}"/>
+            </h:selectOneMenu>
+            <h:outputLabel value="Book ID:"/>
+            <h:inputText value="#{BookBean.book_id}" id="cid" readonly="true"/>
+            <h:outputLabel value="Book Name:"/>
+            <h:inputText value="#{BookBean.book_name}" id="bname"/>
+            <h:outputLabel value="Author:"/>
+            <h:inputText value="#{BookBean.author}" id="fname"/>
+            <h:outputLabel value="genre:"/>
+            <h:inputText value="#{BookBean.genre}" id="lname"/>
+            <h:outputLabel value="page:"/>
+            <h:inputText value="#{BookBean.page}" id="email"/>
+            <h:outputLabel value="price:"/>
+            <h:inputText value="#{BookBean.price}" id="sd"/>
+            <f:facet name="footer">
+                <h:outputLabel value="#{BookBean.msg}" id="msg2" styleClass="msg"/>
+                <h:commandButton value="Update Info" action="#{BookBean.updateBook}">
+                    <f:ajax render="ulist cid bname fname lname email sd msg2" execute="@form"/>
+                </h:commandButton>
+                <h:commandButton value="Delete Info" action="#{BookBean.deleteBook}">
+                    <f:ajax render="ulist cid bname fname lname email sd msg2" execute="@form"/>
+                </h:commandButton>
+            </f:facet>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>
