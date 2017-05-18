@@ -1,0 +1,7 @@
+df <- read.csv2(file.choose(), header=T)
+men <- subset(df$SYSBP,df$SEX==0 & df$SYSBP>0)
+hist(men, col="lightblue", xlim=c(50, 200), main="SYSTOLIC BLOOD PRESSURE OF MEN", xlab="Systolic Blood Pressure", freq=FALSE)
+women <- subset(df$SYSBP,df$SEX==1 & df$SYSBP>0)
+hist(women, col="pink", xlim=c(50, 200),main="SYSTOLIC BLOOD PRESSURE OF WOMEN", xlab="Systolic Blood Pressure", freq=FALSE)
+hist(sample(men,50),xlim=c(50, 200),col="green", freq=FALSE)
+hist(sample(women,50), xlim=c(50, 200),col="purple", ylim=c(0,0.04),freq=FALSE)
